@@ -132,7 +132,7 @@ export const clients = ['Architect', 'Trend', 'Interior', 'Building', 'Real Esta
 export type Member = { name: string; role: string; photo?: string }
 
 export const team: Member[] = [
-  { name: 'Amara Bello', role: 'Lead Interior Designer', photo: img('designer.jpg') },
+  { name: 'Amanda Jones', role: 'Lead Interior Designer', photo: img('designer.jpg') },
   { name: 'Mark Jackson', role: 'Exhibition Designer' },
   { name: 'Valeria Novikova', role: 'Production Designer' },
   { name: 'Alex Podzemsky', role: 'Interior Decorator' },
