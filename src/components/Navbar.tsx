@@ -72,6 +72,7 @@ export default function Navbar() {
         {open && (
           <motion.nav
             className="mobile-menu"
+            data-lenis-prevent
             initial={{ clipPath: 'circle(0% at 95% 5%)' }}
             animate={{ clipPath: 'circle(150% at 95% 5%)' }}
             exit={{ clipPath: 'circle(0% at 95% 5%)' }}

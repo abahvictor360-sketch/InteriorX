@@ -274,6 +274,12 @@ p {
   font-weight: 500;
 }
 
+.nav-links a,
+.nav-phone,
+.nav-right .btn {
+  white-space: nowrap;
+}
+
 .nav-links a {
   position: relative;
   padding: 6px 0;
@@ -346,6 +352,19 @@ p {
   display: flex;
   flex-direction: column;
   gap: 8px;
+  overflow-y: auto;
+  overscroll-behavior: contain;
+}
+
+@media (max-height: 700px) {
+  .mobile-menu {
+    padding-top: 70px;
+    gap: 2px;
+  }
+
+  .mobile-menu a {
+    font-size: 30px;
+  }
 }
 
 .mobile-menu a {
@@ -2109,15 +2128,28 @@ p {
 }
 
 /* ---------- responsive ---------- */
-@media (max-width: 1100px) {
-  .nav-links,
+/* the full menu needs ~1280px; the phone number another ~160px */
+@media (max-width: 1439px) {
   .nav-phone {
+    display: none;
+  }
+}
+
+@media (max-width: 1279px) {
+  .nav-links {
     display: none;
   }
 
   .burger {
     display: grid;
   }
+
+  .nav-right .grid-btn {
+    display: none;
+  }
+}
+
+@media (max-width: 1100px) {
 
   .pillars,
   .stats,
