@@ -73,7 +73,7 @@ export function Preloader() {
             transition={{ duration: 0.8, ease }}
           >
             <LogoMark />
-            interiorx
+            InteriorX
           </motion.div>
         </motion.div>
       )}

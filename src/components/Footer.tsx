@@ -75,7 +75,7 @@ export default function Footer() {
         transition={{ duration: 1.4, ease }}
         aria-hidden
       >
-        interiorx
+        InteriorX
       </motion.div>
     </footer>
   )

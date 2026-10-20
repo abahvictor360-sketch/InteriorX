@@ -113,7 +113,7 @@ export function WhoWeAre() {
 export function WhereSpaces() {
   return (
     <section className="section dark-split">
-      <Watermark text="interiorx" className="light" />
+      <Watermark text="InteriorX" className="light" />
       <div className="container split-grid">
         <div>
           <Reveal>
@@ -227,7 +227,7 @@ export function Process() {
   return (
     <section className="section process">
       <div className="process-top" ref={ref}>
-        <Watermark text="interiorx" />
+        <Watermark text="InteriorX" />
         <motion.img
           className="floorplan"
           src={images.floorplan}
