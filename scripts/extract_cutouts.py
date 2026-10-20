@@ -1,27 +1,32 @@
-"""Cut the transparent PNG assets (floor plan, house, designer portrait) out of the design mockup.
+"""Cut the transparent PNG assets (floor plan, house) out of the design mockup.
 
-Backgrounds are removed with the ISNet segmentation model (the same one rembg uses), run via onnxruntime.
+Crops are upscaled 4x with EDSR, then backgrounds are removed with the ISNet segmentation model
+(the same one rembg uses), run via onnxruntime.
 Usage:
     curl -L -o isnet.onnx https://github.com/danielgatis/rembg/releases/download/v0.0.0/isnet-general-use.onnx
-    python3 scripts/extract_cutouts.py <mockup.jpg> <isnet.onnx> <out_dir>
+    curl -L -o EDSR_x4.pb https://raw.githubusercontent.com/Saafke/EDSR_Tensorflow/master/models/EDSR_x4.pb
+    python3 scripts/extract_cutouts.py <mockup.jpg> <isnet.onnx> <EDSR_x4.pb> <out_dir>
 """
 import os
 import sys
 
+import cv2
 import numpy as np
 import onnxruntime as ort
 from PIL import Image, ImageDraw, ImageFilter
 
-SRC, MODEL, OUT = sys.argv[1], sys.argv[2], sys.argv[3]
+SRC, MODEL, SR_MODEL, OUT = sys.argv[1:5]
 os.makedirs(OUT, exist_ok=True)
 mockup = Image.open(SRC).convert("RGB")
 session = ort.InferenceSession(MODEL, providers=["CPUExecutionProvider"])
+sr = cv2.dnn_superres.DnnSuperResImpl_create()
+sr.readModel(SR_MODEL)
+sr.setModel("edsr", 4)
 
 # name: crop box in mockup pixels
 CUTOUTS = {
     "floorplan": (318, 1608, 712, 1832),
     "house": (44, 2706, 690, 2816),
-    "designer": (133, 3744, 292, 3937),
 }
 
 
@@ -50,8 +55,8 @@ def fill_holes(mask: Image.Image) -> Image.Image:
 
 for name, box in CUTOUTS.items():
     crop = mockup.crop(box)
-    big = crop.resize((crop.width * 3, crop.height * 3), Image.LANCZOS)
-    big = big.filter(ImageFilter.UnsharpMask(radius=2, percent=70, threshold=2))
+    big = Image.fromarray(cv2.cvtColor(sr.upsample(cv2.cvtColor(np.asarray(crop), cv2.COLOR_RGB2BGR)), cv2.COLOR_BGR2RGB))
+    big = big.filter(ImageFilter.UnsharpMask(radius=1.5, percent=50, threshold=3))
     cut = big.convert("RGBA")
     cut.putalpha(alpha_mask(big))
     cut = cut.crop(cut.getchannel("A").point(lambda a: 255 if a > 20 else 0).getbbox())

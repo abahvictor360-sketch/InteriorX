@@ -3,7 +3,7 @@ import { ArrowDown, ArrowRight, ArrowUpRight, Check, Play, Star, X } from 'lucid
 import { useEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Counter, Heading, ImageReveal, Parallax, Reveal, Watermark, ease, fadeUp, stagger } from '../components/motion'
-import { Btn, SectionHead } from '../components/ui'
+import { Btn, MemberPortrait, SectionHead } from '../components/ui'
 import { clients, gallery, images, pillars, posts, process, projects, services, stats, team, testimonials } from '../data'
 
 /* ---------------- Hero ---------------- */
@@ -499,15 +499,18 @@ export function TeamShowcase() {
         <div className="team-grid">
           <Reveal>
             <motion.div className="team-photo" whileHover={{ rotate: -1.5 }}>
-              <motion.img
-                src={images.designer}
-                alt={team[on].name}
-                key={on}
-                initial={{ y: 40, opacity: 0 }}
-                animate={{ y: 0, opacity: 1 }}
-                transition={{ duration: 0.7, ease }}
-                style={{ x: '-50%' }}
-              />
+              <AnimatePresence mode="popLayout">
+                <motion.div
+                  className="portrait"
+                  key={on}
+                  initial={{ clipPath: 'inset(100% 0% 0% 0%)', scale: 1.1 }}
+                  animate={{ clipPath: 'inset(0% 0% 0% 0%)', scale: 1 }}
+                  exit={{ opacity: 0 }}
+                  transition={{ duration: 0.8, ease }}
+                >
+                  <MemberPortrait m={team[on]} />
+                </motion.div>
+              </AnimatePresence>
               <div className="role-badge glass">
                 <strong>{team[on].name}</strong> · {team[on].role}
               </div>

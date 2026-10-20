@@ -2,14 +2,14 @@ import { motion } from 'framer-motion'
 import { ArrowUpRight } from 'lucide-react'
 import PageHero from '../components/PageHero'
 import { fadeUp, stagger } from '../components/motion'
-import { SectionHead } from '../components/ui'
+import { MemberPortrait, SectionHead } from '../components/ui'
 import { images, team } from '../data'
 import { CTA } from '../sections/HomeSections'
 
 const tints = ['#e9dcc4', '#d9d4cc', '#e6d3b3', '#d7cfc2', '#ebe3d6', '#d9c6a7']
 
 export default function Team() {
-  const members = [...team, { name: 'Sofia Laurent', role: 'Furniture Designer' }]
+  const members = [...team, { name: 'Jake Nicholson', role: 'Color Consultant' }]
   return (
     <>
       <PageHero title="Our [Team]" tag="Amazing design team" image={images.about} crumb="Team" />
@@ -20,7 +20,7 @@ export default function Team() {
             {members.map((m, i) => (
               <motion.article className="member" key={m.name} variants={fadeUp} whileHover={{ y: -10 }}>
                 <div className="ph" style={{ background: `linear-gradient(160deg, ${tints[i % tints.length]}, #c49b5f)` }}>
-                  <img src={images.designer} alt={m.name} loading="lazy" />
+                  <MemberPortrait m={m} />
                 </div>
                 <div className="body">
                   <div>

@@ -6,7 +6,7 @@ export const images = {
   about: img('about.jpg'),
   floorplan: img('floorplan.png'),
   house: img('house.png'),
-  designer: img('designer.png'),
+  designer: img('designer.jpg'),
   testimonial: img('service-residential.jpg'),
   panorama: img('panorama.jpg'),
   cta: img('cta.jpg'),
@@ -129,12 +129,14 @@ export const testimonials = [
 
 export const clients = ['Architect', 'Trend', 'Interior', 'Building', 'Real Estate', 'Construct']
 
-export const team = [
+export type Member = { name: string; role: string; photo?: string }
+
+export const team: Member[] = [
+  { name: 'Amara Bello', role: 'Lead Interior Designer', photo: img('designer.jpg') },
   { name: 'Mark Jackson', role: 'Exhibition Designer' },
   { name: 'Valeria Novikova', role: 'Production Designer' },
   { name: 'Alex Podzemsky', role: 'Interior Decorator' },
   { name: 'Helen Reeves', role: 'Lighting Designer' },
-  { name: 'Jake Nicholson', role: 'Color Consultant' },
 ]
 
 export const posts = [

@@ -1,5 +1,6 @@
 import { ArrowUpRight } from 'lucide-react'
 import type { ReactNode } from 'react'
+import type { Member } from '../data'
 import { Link } from 'react-router-dom'
 import { Heading, Magnetic, Reveal } from './motion'
 
@@ -33,6 +34,17 @@ export function Btn({ to, children, light, solid }: { to: string; children: Reac
         )}
       </Link>
     </Magnetic>
+  )
+}
+
+/** A member's photo, or an initials tile until a photo is supplied. */
+export function MemberPortrait({ m, className }: { m: Member; className?: string }) {
+  if (m.photo) return <img className={className} src={m.photo} alt={m.name} loading="lazy" />
+  const initials = m.name.split(' ').map((n) => n[0]).join('')
+  return (
+    <div className={`initials ${className ?? ''}`} role="img" aria-label={m.name}>
+      {initials}
+    </div>
   )
 }
 
